@@ -1,0 +1,24 @@
+{
+  "name": "upload-example",
+  "version": "1.0.0",
+  "description": "A simple REST API using Express and body-parser",
+  "main": "src/index.js",
+  "engines": {
+    "node": "12.x"
+  },
+  "scripts": {
+    "start": "nodemon src/index.js localhost 8080"
+  },
+  "dependencies": {
+    "@vercel/node": "1.7.4"
+  },
+  "devDependencies": {
+    "nodemon": "1.18.4"
+  },
+  "keywords": [
+    "rest",
+    "express",
+    "api",
+    "body-parser"
+  ]
+}
