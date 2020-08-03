@@ -45,48 +45,37 @@
       <a href="https://time2hack.com">Time to Hack</a></i>
   </p>
   <p>Checkout following endpoints</p>
-  <ul>
-    <li><a href="/api/">/api/</a></li>
-    <li><a href="/api/upload">/api/upload</a></li>
-  </ul>
+  <a href="/api/">/api/</a> | <a href="/api/upload">/api/upload</a>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const formEl = document.querySelector('#imageUploadForm')
-      attachFormEvents(formEl)
-      console.log(formEl)
-    })
+      const attachFormEvents = (formEl) => {
+        if (!formEl) {
+          return
+        }
 
-    const attachFormEvents = (formEl) => {
-      console.log(formEl)
-      if (!formEl) {
-        return
-      }
+        const stop = formEl.querySelector('#stop')
+        const status = formEl.querySelector('#status')
+        var controller = new AbortController();
+        var signal = controller.signal;
 
-      console.log('submit')
-      const stop = formEl.querySelector('#stop')
-      const status = formEl.querySelector('#status')
-      var controller = new AbortController();
-      var signal = controller.signal;
-
-      formEl.addEventListener('submit', (e) => {
-        console.log('submit')
-        e.preventDefault()
-        e.stopPropagation()
-        status.innerText = ''
-        const formData = new FormData(formEl);
-        console.log(formData)
-        const url = 'https://api-test-time2hack.vercel.app/api/upload'
-        fetch(url, { signal, method: 'POST' })
-          .then(r => r.json())
-          .catch(e => ({ status: e.message })
+        formEl.addEventListener('submit', (e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          status.innerText = ''
+          const formData = new FormData(formEl);
+          const url = '/api/upload'
+          fetch(url, { signal, method: 'POST' })
+            .then(r => r.json())
+            .catch(e => ({ status: e.message }))
             .finally(stat => (status.innerText = stat.status))
         })
+        stop && stop.addEventListener('click', (e) => controller.abort())
+      }
 
-      stop && stop.addEventListener('click', (e) => {
-        controller.abort()
-      })
-    }
+      const formEl = document.querySelector('#imageUploadForm')
+      attachFormEvents(formEl)
+    })
   </script>
 </body>
 
